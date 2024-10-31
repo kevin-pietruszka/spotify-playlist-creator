@@ -9,7 +9,10 @@ import (
 )
 
 type model struct {
+	screenHeight int
+	screenWidth  int
 }
+
 type tickMsg time.Time
 
 func initialModel() model {
@@ -22,6 +25,9 @@ func (m model) Init() tea.Cmd {
 
 func (m model) Update(message tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := message.(type) {
+	case tea.WindowSizeMsg:
+		m.screenHeight = msg.Height
+		m.screenWidth = msg.Width
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "q", "esc", "ctrl+c":
@@ -33,7 +39,8 @@ func (m model) Update(message tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	return fmt.Sprintf("Hello")
+	line := fmt.Sprintf("Height: %d, Width: %d", m.screenHeight, m.screenWidth)
+	return line
 }
 
 func Run() {
