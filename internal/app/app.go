@@ -1,11 +1,11 @@
 package app
 
 import (
-	"fmt"
 	"log"
 	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type model struct {
@@ -39,8 +39,30 @@ func (m model) Update(message tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	line := fmt.Sprintf("Height: %d, Width: %d", m.screenHeight, m.screenWidth)
-	return line
+
+	if m.screenHeight < 15 || m.screenWidth < 50 {
+		fullscreen := lipgloss.NewStyle().
+			Width(m.screenWidth).
+			Height(m.screenHeight)
+		return fullscreen.Render("Expand your screen")
+	}
+
+	rightWidth := m.screenWidth / 3
+	leftWidth := m.screenWidth - rightWidth
+
+	borderStyle := lipgloss.NewStyle().
+		Border(lipgloss.RoundedBorder()).
+		BorderForeground(lipgloss.Color("#008000"))
+
+	rightPanel := borderStyle.
+		Width(rightWidth - 2).
+		Height(m.screenHeight - 2)
+
+	leftPanel := borderStyle.
+		Width(leftWidth - 2).
+		Height(m.screenHeight - 2)
+
+	return lipgloss.JoinHorizontal(lipgloss.Top, leftPanel.Render("Left"), rightPanel.Render("Right"))
 }
 
 func Run() {
