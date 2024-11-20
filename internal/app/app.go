@@ -15,6 +15,8 @@ type model struct {
 
 type tickMsg time.Time
 
+const spotifyGreen = "#008000"
+
 func initialModel() model {
 	return model{}
 }
@@ -52,7 +54,7 @@ func (m model) View() string {
 
 	borderStyle := lipgloss.NewStyle().
 		Border(lipgloss.RoundedBorder()).
-		BorderForeground(lipgloss.Color("#008000"))
+		BorderForeground(lipgloss.Color(spotifyGreen))
 
 	rightPanel := borderStyle.
 		Width(rightWidth - 2).
