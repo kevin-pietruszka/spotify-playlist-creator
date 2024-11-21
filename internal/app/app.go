@@ -51,20 +51,37 @@ func (m model) View() string {
 
 	rightWidth := m.screenWidth / 3
 	leftWidth := m.screenWidth - rightWidth
+	leftWidthWithBorder := leftWidth - 2
+	rightWidthWithBorder := rightWidth - 2
 
 	borderStyle := lipgloss.NewStyle().
 		Border(lipgloss.RoundedBorder()).
 		BorderForeground(lipgloss.Color(spotifyGreen))
 
-	rightPanel := borderStyle.
-		Width(rightWidth - 2).
-		Height(m.screenHeight - 2)
+	oneFourthHeight := m.screenHeight / 4
+	descriptionHeight := oneFourthHeight - 2
+	descriptionBox := borderStyle.
+		Width(rightWidthWithBorder).
+		Height(descriptionHeight)
 
-	leftPanel := borderStyle.
-		Width(leftWidth - 2).
-		Height(m.screenHeight - 2)
+	listHeight := m.screenHeight - oneFourthHeight - 2
+	listBox := borderStyle.
+		Width(rightWidthWithBorder).
+		Height(listHeight)
 
-	return lipgloss.JoinHorizontal(lipgloss.Top, leftPanel.Render("Left"), rightPanel.Render("Right"))
+	searchBox := borderStyle.
+		Width(leftWidthWithBorder).
+		Height(1)
+
+	resultsHeight := m.screenHeight - 2 - 3
+	resultsBox := borderStyle.
+		Width(leftWidthWithBorder).
+		Height(resultsHeight)
+
+	leftPanel := lipgloss.JoinVertical(lipgloss.Top, resultsBox.Render("Results"), searchBox.Render("Search"))
+	rightPanel := lipgloss.JoinVertical(lipgloss.Top, listBox.Render("Added List"), descriptionBox.Render("Description"))
+
+	return lipgloss.JoinHorizontal(lipgloss.Top, leftPanel, rightPanel)
 }
 
 func Run() {
