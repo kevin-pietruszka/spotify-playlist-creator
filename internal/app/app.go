@@ -58,13 +58,13 @@ func (m model) View() string {
 		Border(lipgloss.RoundedBorder()).
 		BorderForeground(lipgloss.Color(spotifyGreen))
 
-	oneFourthHeight := m.screenHeight / 4
-	descriptionHeight := oneFourthHeight - 2
+	oneThirdHeight := m.screenHeight / 3
+	descriptionHeight := oneThirdHeight - 2
 	descriptionBox := borderStyle.
 		Width(rightWidthWithBorder).
 		Height(descriptionHeight)
 
-	listHeight := m.screenHeight - oneFourthHeight - 2
+	listHeight := m.screenHeight - oneThirdHeight - 2
 	listBox := borderStyle.
 		Width(rightWidthWithBorder).
 		Height(listHeight)
