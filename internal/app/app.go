@@ -32,7 +32,7 @@ func (m model) Update(message tea.Msg) (tea.Model, tea.Cmd) {
 		m.screenWidth = msg.Width
 	case tea.KeyMsg:
 		switch msg.String() {
-		case "q", "esc", "ctrl+c":
+		case "esc", "ctrl+c":
 			return m, tea.Quit
 		}
 	}
